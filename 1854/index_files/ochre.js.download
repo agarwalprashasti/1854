@@ -1,0 +1,183 @@
+﻿(function ($) {
+
+    $("#litLoginStatus, #litLoginMessage, #litRegisterStatus, #litRegisterMessage, .ochre-loader").hide();
+    $("#btnOchreLogin").prop('disabled', true);
+
+    $('#username').on('input',function(e){
+        $("#btnOchreLogin").prop('disabled', false);
+    });
+
+    $("#btnOchreLogin").on("click", function (e) {
+         $(this).prop('disabled', true);
+        $.ajax({
+            url: '/wp-json/ochre/v1/ajax/login/',
+            type: 'post',
+            dataType: 'json',
+            data: $('form#frmOchreLogin').serialize(),
+            beforeSend: function () {       
+                $('.ochre-loader').show();
+            },
+            success: function (response)
+            {
+                if (response.success === true)
+                {
+                    window.location.href = response.url;
+                }
+                else
+                {
+                    $('.ochre-loader').hide();
+                    $('.ochre-error').show();
+                    $("#btnOchreLogin").prop('disabled', false);
+                    $('#litLoginStatus').html('<span>Failed</span>').show();
+                    $('#litLoginMessage').html('<span>' + response.message + '</span>').show();
+                }
+            },
+            error: function (xhr, textStatus, error) {
+                var err = JSON.parse(xhr.responseText);
+                $('.ochre-loader').hide();
+                $('.ochre-error').show();
+                $("#btnOchreLogin").prop('disabled', false);
+                $('#litLoginStatus').html('<span>Failed</span>').show();
+                $('#litLoginMessage').html('<span>' + err.message + '</span>').show();
+            }                
+        });
+    });
+
+    $("#btnEditorLogin").on("click", function (e) {
+         $(this).prop('disabled', true);
+        $.ajax({
+            url: '/wp-json/ochre/v1/ajax/editorlogin/',
+            type: 'post',
+            dataType: 'json',
+            data: $('form#frmEditorLogin').serialize(),
+            beforeSend: function () {       
+                $('.ochre-loader').show();
+            },
+            success: function (response)
+            {
+                if (response.success === true)
+                {
+                    window.location.href = response.url;
+                }
+                else
+                {
+                    $("#btnEditorLogin").prop('disabled', false);
+                    $('.ochre-error').show();
+                    $('#litLoginStatus').html('<span>Failed</span>').show();
+                    $('#litLoginMessage').html('<span>' + response.message + '</span>').show();
+                }
+            },
+            error: function (xhr, textStatus, error) {
+                var err = JSON.parse(xhr.responseText);
+                $('.ochre-loader').hide();
+                $('.ochre-error').show();
+                $("#btnEditorLogin").prop('disabled', false);
+                $('#litLoginStatus').html('<span>Failed</span>').show();
+                $('#litLoginMessage').html('<span>' + err.message + '</span>').show();
+            }                
+        });
+    });
+
+    function RedirectTo(url, litMessageId)
+    {
+        $(litMessageId).html("");
+        window.location.href = url;
+    }
+/*
+    $('#email').on('input',function(e)
+    {
+        var emailAddress = $(this).val();
+        if( emailAddress.length )
+        {    
+            $("#cbxAllow").parent().addClass("ochre-ctrl-required");
+        }
+        else
+        {
+            $("#cbxAllow").parent().removeClass("ochre-ctrl-required");
+        }
+    });
+
+
+    $("#cbxAllow").change(function() 
+    {
+        var disableRegistration = true;
+        var emailAddress = $('#email').val();
+        if( this.checked &&  emailAddress.length > 0)
+        {
+            disableRegistration = false;
+            $("#cbxAllow").parent().removeClass("ochre-ctrl-required");
+        }
+      
+        $("#btnOchreRegister").prop('disabled', disableRegistration);
+    });
+
+*/
+    $("#btnOchreRegister").on("click", function (e) {
+        var emailAddress = $('#email').val();
+
+        if($('#cbxAllow').is(":checked")
+                &&  emailAddress.length > 0)
+        {
+            if( $("#cbxAllow").parent().hasClass("ochre-ctrl-required"))
+            {
+                $("#cbxAllow").parent().removeClass("ochre-ctrl-required");
+            }
+            $.ajax({
+                url: '/wp-json/ochre/v1/ajax/register/',
+                type: 'post',
+                dataType: 'json',
+                data: $('form#frmOchreRegister').serialize(),
+                beforeSend: function () {
+                    $('.ochre-loader').show();
+               
+                },
+                success: function (response) {
+                    if (response.success === true)
+                    {
+                        $('.ochre-loader').hide();
+                        $('.ochre-error').show();
+                        $('#litRegisterStatus').hide();
+                        $('#litRegisterMessage').html('<span>' + response.message + '</span>').show();
+                        setTimeout(RedirectTo, 10000, response.url, '#litRegisterMessage').show();
+                    }
+                    else
+                    {
+                        $('.ochre-loader').hide();
+                        $('.ochre-error').show();
+                        $("#btnOchreRegister").prop('disabled', false);
+                        $('#litRegisterStatus').html('<span>Failed</span>').show();
+                        $('#litRegisterMessage').html('<span>' + response.message + '</span>').show();
+                    }
+                },
+                error: function (xhr, textStatus, error) {
+                    var err = JSON.parse(xhr.responseText);
+                    $('.ochre-loader').hide();
+                    $('.ochre-error').show();
+                    $("#btnOchreRegister").prop('disabled', false);
+                    $('#litRegisterStatus').html('<span>Failed</span>').show();
+                    $('#litRegisterMessage').html('<span>' + err.message + '</span>').show();
+                }
+            });
+        }
+        else
+        {
+            if($('#cbxAllow').is(":checked") == false )
+            {
+                 $("#cbxAllow").parent().addClass("ochre-ctrl-required");
+            }
+            else
+            {
+                $("#cbxAllow").parent().removeClass("ochre-ctrl-required");
+            }
+            if(emailAddress.length == 0 )
+            {
+                $("#email").parent().addClass("ochre-ctrl-required");
+            }
+            
+        }
+    });
+
+})(jQuery);
+
+
+

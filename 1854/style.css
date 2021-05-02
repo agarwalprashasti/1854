@@ -1,0 +1,142 @@
+@font-face {
+    font-family:fut;
+    src: url('fonts/futura-pt-demi.otf');
+}
+@font-face {
+    font-family: 'futura book';
+    src: url('fonts/Futura\ Book.ttf');
+}
+@font-face {
+    font-family: fu;
+    src: url('fonts/Futura\ Std\ Book.ttf');
+}
+@font-face {
+    font-family: 'bank mile';
+    src: url('fonts/Banks&MilesSingleLine.ttf');
+}
+@font-face {
+    font-family: 'futura round';
+    src: url(fonts/Futura\ Round.ttf);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    /* background-image: url('https://cdn.pixabay.com/index/2021/04/30/09-58-39-26_1440x480.jpg');
+    background-size: cover;
+    height:100%; */
+}
+.pop-up{
+    display: flex;
+    position: relative;
+    top: 90px;
+    width: 910px; 
+    height: 528px;
+    border: 1px solid black;
+    margin-left:240px; 
+    /* border: none; */
+}
+.side-background{
+  position: relative;
+  border:none;
+  right:17px;
+}
+.logo{
+    width:70px;
+    height:70px;
+    position: absolute;
+    top:428px;
+    left:43px;
+}
+
+h1{
+  font-family: fut;
+  position: relative;
+  left:80px;
+  top:40px;
+  line-height: 35px;
+  font-size: 30px;
+  font-weight: bolder;
+}
+h2{
+    position: absolute;
+    font-family: fu;
+    left:450px;
+    top: 130px;
+    font-size:16.2px ;
+    letter-spacing: normal;
+    display: block;
+    font-weight: lighter;
+}
+#female-focus{
+    position: absolute;
+    font-family: bank mile;
+    font-size: 25px;
+    left:120px;
+    top:438px;
+    color:white;
+}
+#award-for-women{
+    position: absolute;
+    color:white;
+    font-family: bank mile;
+    left:120px;
+    top:468px;
+    font-size: 10.3px;    
+}
+.registration{
+    position:relative;
+    left:80px;
+    top:160px;
+}
+form input{
+    
+    width:370px;
+    margin-bottom: 11.5px;
+    border:1px solid gray;
+    font-weight: lighter;
+    padding:10px;
+}
+::placeholder{
+    color: gray;
+    font-family: 'futura round';
+    padding:5px;
+}
+
+#consent{
+    position: relative;
+    font-size: 12px;
+    font-weight: lighter;
+    margin-bottom: 15px;
+}
+#consent a{
+   text-decoration: none;
+   font-family: 'futura round';
+}
+span{
+    font-weight: bolder;
+    font-size:12px;
+    font-family: 'futura round';
+    position: relative;
+    bottom:2px;
+}
+.register{
+    
+    height: 43px;
+    width:130px;
+    font-family: 'futura round';
+    font-weight: bold;
+    color:white;
+    background-color: #256c68;
+    border: none;
+    letter-spacing: 2px;
+    padding:10px;
+}
+h5{
+    position: relative;
+    font-family: 'futura round';
+    color:gray;
+    font-weight: lighter;
+    bottom:30px;
+    left:150px;
+}
